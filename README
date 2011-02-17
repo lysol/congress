@@ -1,0 +1,8 @@
+Congress
+========
+
+Congress is my haphazard attempt at a Kademlia-like library for building
+P2P overlay networks, which isn't anything original.
+
+K-buckets are not used properly at this time but I'llwork on doing that in the
+future. Documentation forthcoming.
