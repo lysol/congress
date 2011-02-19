@@ -4,5 +4,8 @@ Congress
 Congress is my haphazard attempt at a Kademlia-like library for building
 P2P overlay networks, which isn't anything original.
 
-K-buckets are not used properly at this time but I'llwork on doing that in the
+K-buckets are not used properly at this time but I'll work on doing that in the
 future. Documentation forthcoming.
+
+Ultimately, however, I don't have the resources to test hundreds of nodes, so
+this probably will never work properly.
