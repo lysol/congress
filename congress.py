@@ -31,10 +31,11 @@ def ping_handler(message, server, peer):
     peer.enqueue_message(reply)
 
 def pong_handler(message, server, peer):
-    server._hit_peer(peer)
+    if peer.active:
+        server._hit_peer(peer)
 
-def id_handler(message, server, peer):
-    server._hit_peer(peer)
+#def id_handler(message, server, peer):
+#    server._hit_peer(peer)
 
 def handle_rpc_store(message, server, peer):
     for key in message.data['store'].keys():
@@ -135,7 +136,9 @@ class CongressPeer(ClumsyPeer):
 class Congress(Clumsy):
 
     def _hit_peer(self, peer):
-        fail = False
+        if not peer.active:
+            self._debug("Peer not active. What.")
+            return
         if peer.id is None:
             self._debug("Peer ID None during _hit_peer.")
             return
@@ -153,10 +156,10 @@ class Congress(Clumsy):
                     self.replacement_buckets[i].remove(peer)
                 self.replacement_buckets[i].insert(0, peer)
                 bucket[-1].enqueue_message(Message(PING))
-        if self.debug:
-            bs = filter(lambda (i, b): b != [], enumerate(self.buckets))
-            rbs = filter(lambda (i, r): r != [],
-                enumerate(self.replacement_buckets))
+        #if self.debug:
+        #    bs = filter(lambda (i, b): b != [], enumerate(self.buckets))
+        #    rbs = filter(lambda (i, r): r != [],
+        #        enumerate(self.replacement_buckets))
 
     def _node_id_present(self, node_id):
         for bucket in self.buckets:
@@ -191,15 +194,11 @@ class Congress(Clumsy):
 
     def _closest_peers(self, id, how_many):
         self._debug('Getting %d closest peers for %s' % (how_many, id))
-        #self._debug('Current peers: ' + \
-        #        str([str((peer.id, peer.server_address, peer.address, peer.active)) + '\n' for \
-        #        peer in self.peers]))
-        active_peers = filter(lambda p: p.active, self.peers)
-        #self._debug('Total peers: %d' % len(self.peers))
-        #self._debug('Active peers: %d' % len(active_peers))
+        active_peers = filter(lambda p: p.active and \
+            p.server_address is not None and \
+            p.id is not None, self.peers)
         closest = sorted(active_peers, key=lambda peer: peer.id ^ id)
         closest = closest[:how_many]
-        #self._debug('Number returned: %d' % len(closest))
         return closest
 
     def rpc_get(self, key, callback):
@@ -227,19 +226,22 @@ class Congress(Clumsy):
         self.store[new_id] = value
 
     def peer_cleanup(self, peer):
+        self._debug("Entering Congress peer cleanup.")
         for (i, bucket) in enumerate(self.buckets):
             for p in bucket:
                 if p == peer or \
                 p.id == peer.id or \
                 p.server_address == peer.server_address or \
                 p.address == peer.address:
+                    self._debug("Removing peer from bucket %d" % i)
                     self.buckets[i].remove(p)
-        for (i, rbucket) in (self.replacement_buckets):
+        for (i, rbucket) in enumerate(self.replacement_buckets):
             for p in rbucket:
                 if p == peer or \
                 p.id == peer.id or \
                 p.server_address == peer.server_address or \
                 p.address == peer.address:
+                    self._debug("Removing peer from rbucket %d" % i)
                     self.replacement_buckets[i].remove(p)
         del(peer)
 
@@ -272,12 +274,13 @@ class Congress(Clumsy):
         self.register_message_handler(RPC_FIND_NODE, handle_rpc_find_node)
         self.register_message_handler(RPC_FIND_NODE_REPLY,
             handle_rpc_find_node_reply)
-        self.register_message_handler(ID_NOTIFY, id_handler)
+        #self.register_message_handler(ID_NOTIFY, id_handler)
         self.retrieval_callbacks = []
 
         # Once we bootstrap a peer, ask them for all peers closest to
         # our own id.
         def node_getter(i_peer, i_server):
+            i_server._hit_peer(i_peer)
             new_m = Message(RPC_FIND_NODE, data={'node_id': i_server.id})
             i_peer.enqueue_message(new_m)
 
