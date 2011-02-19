@@ -5,6 +5,8 @@ import hashlib
 import struct
 import pyev
 import socket
+import traceback
+import sys
 
 k = 20
 a = 3
@@ -17,6 +19,12 @@ RPC_GET = 7
 RPC_FIND_NODE_REPLY = 8
 RPC_GET_REPLY = 9
 
+
+def sha1_hash(key):
+    sha1 = hashlib.sha1()
+    sha1.update(key)
+    new_id = long(sha1.digest().encode('hex'), 16)
+    return new_id
 
 def ping_handler(message, server, peer):
     reply = Message(PONG, re=message.id)
@@ -33,36 +41,61 @@ def handle_rpc_store(message, server, peer):
         server.store[long(key)] = message.data['store'][key]
 
 def handle_rpc_get(message, server, peer):
+    if 'attempt' in message.data.keys():
+        attempt = message.data['attempt']
+    else:
+        attempt = 1
     key = message.data['key']
     if key in server.store.keys():
         m = Message(RPC_GET_REPLY, 
-            data={'store': {str(key): server.store[key]}},
+            data={'store': {str(key): server.store[key]}, 'attempt': attempt},
             re=message.id)
         peer.enqueue_message(m)
     else:
-        m = Message(RPC_GET_REPLY, data={'peers': [], 'key': key},
-            re=message.id)
+        m = Message(RPC_GET_REPLY, data={'peers': [], 'key': key,
+            'attempt': attempt}, re=message.id)
         closest = server._closest_peers(key, a)
         for other_peer in closest:
             m.data['peers'].append((other_peer.id,
                 other_peer.server_address[0], other_peer.server_address[1]))
         peer.enqueue_message(m)
 
+def value_check(message, server):
+    for tup in list(server.retrieval_callbacks):
+        (key, callback) = tup
+        hash_key = sha1_hash(key)
+        server._debug("Key: %s\nStore: %s" % (hash_key, server.store))
+        if hash_key in [long(yek) for yek in server.store.keys()]:
+            try:
+                callback(key, message.data['store'][str(hash_key)])
+            except Exception, e:
+                traceback.print_exc(file=sys.sterr)
+            server.retrieval_callbacks.remove(tup)
+            return True
+    return False
+
 def handle_rpc_get_reply(message, server, peer):
+    if 'attempt' in message.data.keys():
+        attempt = message.data['attempt']
+    else:
+        attempt = 1
     # We actually got the value
     if 'peers' not in message.data.keys():
         # store it
         for (skey, sval) in message.data['store'].iteritems():
+            server._debug('Storing value received from peer.')
             server.store[long(skey)] = sval
-        for tup in list(server.retrieval_callbacks):
-            (key, callback) = tup
-            if key in [long(yek) for yek in message.data['store'].keys()]:
-                callback(key, message.data['store'][str(key)])
-                server.retrieval_callbacks.remove(tup)
+        if value_check(message, server):
+            return
     # got a peer list instead
     else:
+        if value_check(message, server):
+            return
+        if attempt > k:
+            return
         for (node_id, address, port) in message.data['peers']:
-            request = Message(RPC_GET, data={'key': message.data['key']},
+            request = Message(RPC_GET,
+                data={'key': message.data['key'], 'attempt': attempt + 1},
                 re=message.id)
             if node_id not in [pee.id for pee in server.peers]:
                 xpeer = server.bootstrap_peer((address, port), id=node_id)
@@ -93,6 +126,9 @@ def handle_rpc_find_node_reply(message, server, peer):
 
 class CongressPeer(ClumsyPeer):
 
+    def __del__(self):
+        ClumsyPeer.__del__(self)
+
     def __init__(self, conn, addr, server):
         ClumsyPeer.__init__(self, conn, addr, server)
 
@@ -100,6 +136,9 @@ class Congress(Clumsy):
 
     def _hit_peer(self, peer):
         fail = False
+        if peer.id is None:
+            self._debug("Peer ID None during _hit_peer.")
+            return
         dist = peer.id ^ self.id
         matching_buckets = filter(lambda (i, b): dist > 2**i and \
             dist < 2**(i+1), enumerate(self.buckets))
@@ -119,53 +158,82 @@ class Congress(Clumsy):
             rbs = filter(lambda (i, r): r != [],
                 enumerate(self.replacement_buckets))
 
+    def _node_id_present(self, node_id):
+        for bucket in self.buckets:
+            for peer in bucket:
+                if type(peer.id) != long:
+                    peer.id = long(peer.id)
+                if peer.id == node_id:
+                    return True
+        return False
+
+    def _conn_present(self, conn):
+        if type(conn) != tuple:
+            conn = tuple(conn)
+        for bucket in self.buckets:
+            for peer in bucket:
+                if type(peer.address) != tuple:
+                    peer.address = tuple(peer.address)
+                if conn == peer.address:
+                    return True
+                if type(peer.server_address) != tuple:
+                    peer.server_address = tuple(peer.server_address)
+                if conn == peer.server_address:
+                    return True
+        return False
+
     def _make_buckets(self):
         self.buckets = []
         self.replacement_buckets = []
         for i in range(160):
             self.buckets.append([])
-            self.replacement_buckets = []
+            self.replacement_buckets.append([])
 
     def _closest_peers(self, id, how_many):
         self._debug('Getting %d closest peers for %s' % (how_many, id))
-        self._debug('Current peers: ' + \
-                str([str((peer.id, peer.server_address, peer.address, peer.active)) + '\n' for \
-                peer in self.peers]))
+        #self._debug('Current peers: ' + \
+        #        str([str((peer.id, peer.server_address, peer.address, peer.active)) + '\n' for \
+        #        peer in self.peers]))
         active_peers = filter(lambda p: p.active, self.peers)
-        self._debug('Total peers: %d' % len(self.peers))
-        self._debug('Active peers: %d' % len(active_peers))
+        #self._debug('Total peers: %d' % len(self.peers))
+        #self._debug('Active peers: %d' % len(active_peers))
         closest = sorted(active_peers, key=lambda peer: peer.id ^ id)
         closest = closest[:how_many]
-        self._debug('Number returned: %d' % len(closest))
+        #self._debug('Number returned: %d' % len(closest))
         return closest
 
     def rpc_get(self, key, callback):
         """Since value retrieval is async, provide a callback that will handle
         the value."""
-        sha1 = hashlib.sha1()
-        sha1.update(key)
-        new_id = long(sha1.digest().encode('hex'), 16)
-
+        new_id = sha1_hash(key)
         if new_id in self.store.keys():
             callback(key, self.store[new_id])
             self._debug('Fired a callback for key %s' % key)
             return True
         closest = self._closest_peers(new_id, a)
         self._debug('Fetched %d closest peers' % len(closest))
-        message = Message(RPC_GET, data={'key': new_id})
         for peer in closest:
+            message = Message(RPC_GET, data={'key': new_id})
+            self.register_message_callback(message, handle_rpc_get_reply)
             peer.enqueue_message(message)
         self.retrieval_callbacks.append((key, callback))
 
     def rpc_store(self, key, value):
-        sha1 = hashlib.sha1()
-        sha1.update(key)
         # This "works"
-        new_id = long(sha1.digest().encode('hex'), 16)
+        new_id = sha1_hash(key)
         for peer in self._closest_peers(new_id, k):
             message = Message(RPC_STORE, data={'store': {str(new_id): value}})
             peer.enqueue_message(message)
         self.store[new_id] = value
+
+    def remove_peer(self, peer):
+        Clumsy.remove_peer(self, peer)
+        for bucket in self.buckets:
+            if peer in bucket:
+                bucket.remove(peer)
+        for rbucket in self.replacement_buckets:
+            if peer in rbucket:
+                rbucket.remove(peer)
 
     def bootstrap_peer(self, conn_address, id=None):
         try:
@@ -180,9 +248,9 @@ class Congress(Clumsy):
         self._ctl = Controller(self, port=port)
 
     def __init__(self, host='0.0.0.0', port=16800, initial_peers=[],
-        debug=False, ctl_port=None):
+        debug=False, ctl_port=None, pyev_loop=None):
         Clumsy.__init__(self, (host, port), client_class=CongressPeer,
-            debug=debug)
+            debug=debug, pyev_loop=pyev_loop)
         self._gen_id()
         self._make_buckets()
         self.store = {}
