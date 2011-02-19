@@ -69,7 +69,7 @@ def value_check(message, server):
             try:
                 callback(key, message.data['store'][str(hash_key)])
             except Exception, e:
-                traceback.print_exc(file=sys.sterr)
+                traceback.print_exc(file=sys.stderr)
             server.retrieval_callbacks.remove(tup)
             return True
     return False
@@ -226,14 +226,22 @@ class Congress(Clumsy):
             peer.enqueue_message(message)
         self.store[new_id] = value
 
-    def remove_peer(self, peer):
-        Clumsy.remove_peer(self, peer)
-        for bucket in self.buckets:
-            if peer in bucket:
-                bucket.remove(peer)
-        for rbucket in self.replacement_buckets:
-            if peer in rbucket:
-                rbucket.remove(peer)
+    def peer_cleanup(self, peer):
+        for (i, bucket) in enumerate(self.buckets):
+            for p in bucket:
+                if p == peer or \
+                p.id == peer.id or \
+                p.server_address == peer.server_address or \
+                p.address == peer.address:
+                    self.buckets[i].remove(p)
+        for (i, rbucket) in (self.replacement_buckets):
+            for p in rbucket:
+                if p == peer or \
+                p.id == peer.id or \
+                p.server_address == peer.server_address or \
+                p.address == peer.address:
+                    self.replacement_buckets[i].remove(p)
+        del(peer)
 
     def bootstrap_peer(self, conn_address, id=None):
         try:
