@@ -4,9 +4,6 @@ Congress
 Congress is my haphazard attempt at a Kademlia-like library for building
 P2P overlay networks, which isn't anything original.
 
-K-buckets are not used properly at this time but I'll work on doing that in the
-future. Documentation forthcoming.
-
 Ultimately, however, I don't have the resources to test hundreds of nodes, so
 this probably will never work properly.
 
@@ -15,16 +12,31 @@ Requirements
 
 * http://github.com/lysol/dogfood
   - Requires jsonlib, Cython
-* http://github.com/lysol/clumsy
-  - Requires pyev
 
 Prereqs on Ubuntu:
   sudo apt-get install python-dev cython libev-dev distutils
   sudo easy_install pyev jsonlib
   git clone git://github.com/lysol/dogfood.git
-  git clone git://github.com/lysol/clumsy.git
   git clone git://github.com/lysol/congress.git
   cd dogfood/
   sudo python setup.py install
-  cd ../clumsy
+  cd ../congress
   sudo python setup.py install
+
+Usage
+=====
+
+python -m congress.congress --host 127.0.0.1 --port 16800 --ctl 19800 \
+    --peer 1.2.3.4 16800 --debug
+
+Debug will spit out a LOT of information.
+
+Control Port
+============
+nc or telnet to the port defined in --ctl, at localhost.
+
+Commands
+ * listpeers
+ * store key val
+ * get key
+ * peer host port

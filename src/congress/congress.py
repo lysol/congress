@@ -1,4 +1,4 @@
-from clumsy import *
+from node import *
 import random
 import argparse
 import hashlib
@@ -126,15 +126,15 @@ def handle_rpc_find_node_reply(message, server, peer):
         new_peer = server.bootstrap_peer((address, port), id=node_id)
 
 
-class CongressPeer(ClumsyPeer):
+class CongressPeer(Peer):
 
     def __del__(self):
-        ClumsyPeer.__del__(self)
+        Peer.__del__(self)
 
     def __init__(self, conn, addr, server):
-        ClumsyPeer.__init__(self, conn, addr, server)
+        Peer.__init__(self, conn, addr, server)
 
-class Congress(Clumsy):
+class Congress(Node):
 
     def _hit_peer(self, peer):
         if not peer.active:
@@ -268,7 +268,7 @@ class Congress(Clumsy):
 
     def __init__(self, host='0.0.0.0', port=16800, initial_peers=[],
         debug=False, ctl_port=None, pyev_loop=None):
-        Clumsy.__init__(self, (host, port), client_class=CongressPeer,
+        Node.__init__(self, (host, port), client_class=CongressPeer,
             debug=debug, pyev_loop=pyev_loop)
         self._gen_id()
         self._make_buckets()
