@@ -7,6 +7,7 @@ import pyev
 import socket
 import traceback
 import sys
+import math
 
 k = 20
 a = 3
@@ -193,13 +194,21 @@ class Congress(Clumsy):
             self.replacement_buckets.append([])
 
     def _closest_peers(self, id, how_many):
-        self._debug('Getting %d closest peers for %s' % (how_many, id))
-        active_peers = filter(lambda p: p.active and \
-            p.server_address is not None and \
-            p.id is not None, self.peers)
-        closest = sorted(active_peers, key=lambda peer: peer.id ^ id)
-        closest = closest[:how_many]
-        return closest
+        self._debug("Finding %d closest peers." % how_many)
+        try:
+            dist = self.id ^ id
+            cl_buckets = [t[1] for t in sorted(enumerate(self.buckets),
+                key=lambda x: math.fabs(dist - 2**x[0]))]
+            closest = []
+            i = 0
+            while len(closest) < k and i < 160:
+                closest.extend(filter(lambda p: p.active, cl_buckets[i]))
+                i += 1
+            if len(closest) > k:
+                closest = closest[:k]
+            return closest
+        except Exception, e:
+            traceback.print_exc(file=sys.stderr)
 
     def rpc_get(self, key, callback):
         """Since value retrieval is async, provide a callback that will handle
