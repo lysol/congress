@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>congress.congress</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://lysol.github.com/congress/">Congress DHT</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;congress ::
+        Module&nbsp;congress
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module congress</h1><p class="nomargin-top"><span class="codelink"><a href="congress.congress-pysrc.html">source&nbsp;code</a></span></p>
+<!-- ==================== CLASSES ==================== -->
+<a name="section-Classes"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Classes</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Classes"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="congress.congress.CongressPeer-class.html" class="summary-name">CongressPeer</a><br />
+      Peer subclass for Congress. Currently no real logic is here.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="congress.congress.Congress-class.html" class="summary-name">Congress</a><br />
+      Main DHT class. The main event loop is a member of this class, and all
+peers and other pyev callbacks attach to this loop.
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="congress.congress-module.html#sha1_hash" class="summary-sig-name">sha1_hash</a>(<span class="summary-sig-arg">key</span>)</span><br />
+      Generate a SHA1 hash for a given string.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#sha1_hash">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="congress.congress-module.html#ping_handler" class="summary-sig-name">ping_handler</a>(<span class="summary-sig-arg">message</span>,
+        <span class="summary-sig-arg">server</span>,
+        <span class="summary-sig-arg">peer</span>)</span><br />
+      Callback for PING messages.
+Send back a PONG.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#ping_handler">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="congress.congress-module.html#pong_handler" class="summary-sig-name">pong_handler</a>(<span class="summary-sig-arg">message</span>,
+        <span class="summary-sig-arg">server</span>,
+        <span class="summary-sig-arg">peer</span>)</span><br />
+      Callback for PONG messages.
+Refresh the k-bucket information for the given peer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#pong_handler">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="congress.congress-module.html#handle_rpc_store" class="summary-sig-name">handle_rpc_store</a>(<span class="summary-sig-arg">message</span>,
+        <span class="summary-sig-arg">server</span>,
+        <span class="summary-sig-arg">peer</span>)</span><br />
+      Callback for STORE messages.
+Store the hashed key: value in our store.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#handle_rpc_store">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="congress.congress-module.html#handle_rpc_get" class="summary-sig-name">handle_rpc_get</a>(<span class="summary-sig-arg">message</span>,
+        <span class="summary-sig-arg">server</span>,
+        <span class="summary-sig-arg">peer</span>)</span><br />
+      Callback for GET messages.
+If we have the value, send it back to the peer.
+If we don't, build a list of alpha closest peers and send it back to the
+peer.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#handle_rpc_get">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="congress.congress-module.html#value_check" class="summary-sig-name">value_check</a>(<span class="summary-sig-arg">message</span>,
+        <span class="summary-sig-arg">server</span>)</span><br />
+      Check if a given hashed key and value are present in the store.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#value_check">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="congress.congress-module.html#handle_rpc_get_reply" class="summary-sig-name">handle_rpc_get_reply</a>(<span class="summary-sig-arg">message</span>,
+        <span class="summary-sig-arg">server</span>,
+        <span class="summary-sig-arg">peer</span>)</span><br />
+      Callback for GET replies.
+If we get the value back in the message, run value_check.
+If we get a list of peers, bootstrap them and request the same
+value.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#handle_rpc_get_reply">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="congress.congress-module.html#handle_rpc_find_node" class="summary-sig-name">handle_rpc_find_node</a>(<span class="summary-sig-arg">message</span>,
+        <span class="summary-sig-arg">server</span>,
+        <span class="summary-sig-arg">peer</span>)</span><br />
+      Callback for FIND_NODE messages.
+Pass back k closest peers to the ID.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#handle_rpc_find_node">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="congress.congress-module.html#handle_rpc_find_node_reply" class="summary-sig-name">handle_rpc_find_node_reply</a>(<span class="summary-sig-arg">message</span>,
+        <span class="summary-sig-arg">server</span>,
+        <span class="summary-sig-arg">peer</span>)</span><br />
+      Callback for FIND_NODE replies.
+Bootstrap any unseen peers.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#handle_rpc_find_node_reply">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="main"></a><span class="summary-sig-name">main</span>()</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#main">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="k"></a><span class="summary-name">k</span> = <code title="20">20</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="a"></a><span class="summary-name">a</span> = <code title="3">3</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="PING"></a><span class="summary-name">PING</span> = <code title="1">1</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="PONG"></a><span class="summary-name">PONG</span> = <code title="2">2</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="RPC_STORE"></a><span class="summary-name">RPC_STORE</span> = <code title="5">5</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="RPC_FIND_NODE"></a><span class="summary-name">RPC_FIND_NODE</span> = <code title="6">6</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="RPC_GET"></a><span class="summary-name">RPC_GET</span> = <code title="7">7</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="RPC_FIND_NODE_REPLY"></a><span class="summary-name">RPC_FIND_NODE_REPLY</span> = <code title="8">8</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="RPC_GET_REPLY"></a><span class="summary-name">RPC_GET_REPLY</span> = <code title="9">9</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="'congress'"><code class="variable-quote">'</code><code class="variable-string">congress</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="sha1_hash"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">sha1_hash</span>(<span class="sig-arg">key</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="congress.congress-pysrc.html#sha1_hash">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Generate a SHA1 hash for a given string.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>key</code></strong></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="ping_handler"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">ping_handler</span>(<span class="sig-arg">message</span>,
+        <span class="sig-arg">server</span>,
+        <span class="sig-arg">peer</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="congress.congress-pysrc.html#ping_handler">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Callback for PING messages.
+Send back a PONG.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>message</code></strong> - PING message</li>
+        <li><strong class="pname"><code>server</code></strong> - The Congress server</li>
+        <li><strong class="pname"><code>peer</code></strong> - The peer the message was received from</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="pong_handler"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">pong_handler</span>(<span class="sig-arg">message</span>,
+        <span class="sig-arg">server</span>,
+        <span class="sig-arg">peer</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="congress.congress-pysrc.html#pong_handler">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Callback for PONG messages.
+Refresh the k-bucket information for the given peer.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>messages</code></strong> - PONG message</li>
+        <li><strong class="pname"><code>server</code></strong> - The Congress server</li>
+        <li><strong class="pname"><code>peer</code></strong> - The peer the message was received from</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="handle_rpc_store"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">handle_rpc_store</span>(<span class="sig-arg">message</span>,
+        <span class="sig-arg">server</span>,
+        <span class="sig-arg">peer</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="congress.congress-pysrc.html#handle_rpc_store">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Callback for STORE messages.
+Store the hashed key: value in our store.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>message</code></strong> - STORE message</li>
+        <li><strong class="pname"><code>server</code></strong> - The Congress server</li>
+        <li><strong class="pname"><code>peer</code></strong> - The peer the message was received from</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="handle_rpc_get"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">handle_rpc_get</span>(<span class="sig-arg">message</span>,
+        <span class="sig-arg">server</span>,
+        <span class="sig-arg">peer</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="congress.congress-pysrc.html#handle_rpc_get">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Callback for GET messages.
+If we have the value, send it back to the peer.
+If we don't, build a list of alpha closest peers and send it back to the
+peer.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>message</code></strong> - GET message</li>
+        <li><strong class="pname"><code>server</code></strong> - The Congress server</li>
+        <li><strong class="pname"><code>peer</code></strong> - The peer the message was receved from</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="value_check"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">value_check</span>(<span class="sig-arg">message</span>,
+        <span class="sig-arg">server</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="congress.congress-pysrc.html#value_check">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Check if a given hashed key and value are present in the store.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>message</code></strong> - This function is only called from the GET reply, so the
+message in the callback is passed to this function.</li>
+        <li><strong class="pname"><code>server</code></strong> - Same deal as the message, this is the Congress server.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="handle_rpc_get_reply"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">handle_rpc_get_reply</span>(<span class="sig-arg">message</span>,
+        <span class="sig-arg">server</span>,
+        <span class="sig-arg">peer</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="congress.congress-pysrc.html#handle_rpc_get_reply">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Callback for GET replies.
+If we get the value back in the message, run value_check.
+If we get a list of peers, bootstrap them and request the same
+value.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>message</code></strong> - The GET reply itself.</li>
+        <li><strong class="pname"><code>server</code></strong> - The Congress server</li>
+        <li><strong class="pname"><code>peer</code></strong> - The peer that sent the message</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="handle_rpc_find_node"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">handle_rpc_find_node</span>(<span class="sig-arg">message</span>,
+        <span class="sig-arg">server</span>,
+        <span class="sig-arg">peer</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="congress.congress-pysrc.html#handle_rpc_find_node">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Callback for FIND_NODE messages.
+Pass back k closest peers to the ID.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>message</code></strong> - The FIND_NODE message itself.</li>
+        <li><strong class="pname"><code>server</code></strong> - The Congress server</li>
+        <li><strong class="pname"><code>peer</code></strong> - The peer that sent the message.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="handle_rpc_find_node_reply"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">handle_rpc_find_node_reply</span>(<span class="sig-arg">message</span>,
+        <span class="sig-arg">server</span>,
+        <span class="sig-arg">peer</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="congress.congress-pysrc.html#handle_rpc_find_node_reply">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Callback for FIND_NODE replies.
+Bootstrap any unseen peers.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>message</code></strong> - The FIND_NODE reply.</li>
+        <li><strong class="pname"><code>server</code></strong> - The Congress server</li>
+        <li><strong class="pname"><code>peer</code></strong> - The peer that sent the reply.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://lysol.github.com/congress/">Congress DHT</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sun Feb 20 22:37:06 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

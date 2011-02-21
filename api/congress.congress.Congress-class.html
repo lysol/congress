@@ -1,0 +1,893 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>congress.congress.Congress</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://lysol.github.com/congress/">Congress DHT</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;congress ::
+        <a href="congress.congress-module.html">Module&nbsp;congress</a> ::
+        Class&nbsp;Congress
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class Congress</h1><p class="nomargin-top"><span class="codelink"><a href="congress.congress-pysrc.html#Congress">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+<a href="congress.node.Node-class.html">node.Node</a> --+
+            |
+           <strong class="uidshort">Congress</strong>
+</pre>
+
+<hr />
+Main DHT class. The main event loop is a member of this class, and all
+peers and other pyev callbacks attach to this loop.
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="congress.congress.Congress-class.html#_hit_peer" class="summary-sig-name" onclick="show_private();">_hit_peer</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">peer</span>)</span><br />
+      Update the node's k-buckets with the peer, using a simplified version
+of the kademlia specification's routine for updating k-buckets.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#Congress._hit_peer">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_node_id_present"></a><span class="summary-sig-name">_node_id_present</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">node_id</span>)</span><br />
+      Determine if any of the connected peers have the specified 160-bit
+node ID.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#Congress._node_id_present">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_conn_present"></a><span class="summary-sig-name">_conn_present</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">conn</span>)</span><br />
+      Determine if the given (address, port) tuple is presently connected
+via any of the peers.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#Congress._conn_present">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_make_buckets"></a><span class="summary-sig-name">_make_buckets</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      At node, start, create 160 k-buckets and 160 replacement buckets.
+Currently, replacement buckets are not used but the peer is placed into
+them if a bucket's peer count is over k.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#Congress._make_buckets">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="congress.congress.Congress-class.html#_closest_peers" class="summary-sig-name" onclick="show_private();">_closest_peers</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">id</span>,
+        <span class="summary-sig-arg">how_many</span>)</span><br />
+      Given the specified 160-bit ID, use the k-buckets to return, at most,
+how_many closest peers to the ID using a XOR metric (id XOR peer.id)</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#Congress._closest_peers">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="congress.congress.Congress-class.html#rpc_get" class="summary-sig-name">rpc_get</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">key</span>,
+        <span class="summary-sig-arg">callback</span>)</span><br />
+      Since value retrieval is async, provide a callback that will handle
+the value.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#Congress.rpc_get">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="congress.congress.Congress-class.html#rpc_store" class="summary-sig-name">rpc_store</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">key</span>,
+        <span class="summary-sig-arg">value</span>)</span><br />
+      Store hashed key: val with k closest connected peers.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#Congress.rpc_store">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="congress.congress.Congress-class.html#peer_cleanup" class="summary-sig-name">peer_cleanup</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">peer</span>)</span><br />
+      When error handling or explicit peer removal schedules a peer object
+for removal, this function is called to remove it from all applicable
+buckets by the core node.py removal routine.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#Congress.peer_cleanup">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="congress.congress.Congress-class.html#bootstrap_peer" class="summary-sig-name">bootstrap_peer</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">conn_address</span>,
+        <span class="summary-sig-arg">id</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Add a peer. This function does not add it to k-buckets,
+as this is handled by the final handshake callback.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#Congress.bootstrap_peer">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="congress.congress.Congress-class.html#_setup_ctl_socket" class="summary-sig-name" onclick="show_private();">_setup_ctl_socket</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">port</span>=<span class="summary-sig-default">29800</span>)</span><br />
+      Setup a socket to listen for simple control connections.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#Congress._setup_ctl_socket">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="congress.congress.Congress-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">host</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">0.0.0.0</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">port</span>=<span class="summary-sig-default">16800</span>,
+        <span class="summary-sig-arg">initial_peers</span>=<span class="summary-sig-default"><code class="variable-group">[</code><code class="variable-group">]</code></span>,
+        <span class="summary-sig-arg">debug</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">ctl_port</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">pyev_loop</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#Congress.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr bgcolor="#e8f0f8" >
+  <th colspan="2" class="group-header"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="congress.node.Node-class.html">node.Node</a></th></tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_debug"></a><span class="summary-sig-name">_debug</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">message</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.node-pysrc.html#Node._debug">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_gen_id"></a><span class="summary-sig-name">_gen_id</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.node-pysrc.html#Node._gen_id">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_remove_peer"></a><span class="summary-sig-name">_remove_peer</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">peer</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.node-pysrc.html#Node._remove_peer">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_sig_cb"></a><span class="summary-sig-name">_sig_cb</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">watcher</span>,
+        <span class="summary-sig-arg">events</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.node-pysrc.html#Node._sig_cb">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_sock_ev"></a><span class="summary-sig-name">_sock_ev</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">watcher</span>,
+        <span class="summary-sig-arg">events</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.node-pysrc.html#Node._sock_ev">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_timer_cb"></a><span class="summary-sig-name">_timer_cb</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">watcher</span>,
+        <span class="summary-sig-arg">events</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.node-pysrc.html#Node._timer_cb">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="add_peer"></a><span class="summary-sig-name">add_peer</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">conn</span>,
+        <span class="summary-sig-arg">connect</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">existing_socket</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.node-pysrc.html#Node.add_peer">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="enqueue_message"></a><span class="summary-sig-name">enqueue_message</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">message</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.node-pysrc.html#Node.enqueue_message">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="handle_message"></a><span class="summary-sig-name">handle_message</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">message</span>,
+        <span class="summary-sig-arg">peer</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.node-pysrc.html#Node.handle_message">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="register_handshake"></a><span class="summary-sig-name">register_handshake</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">func</span>)</span><br />
+      Any time a new incoming connectin is made, the argument will be
+executed with the arguments peer and the server itself.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.node-pysrc.html#Node.register_handshake">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="register_message_callback"></a><span class="summary-sig-name">register_message_callback</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">message</span>,
+        <span class="summary-sig-arg">func</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.node-pysrc.html#Node.register_message_callback">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="register_message_handler"></a><span class="summary-sig-name">register_message_handler</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">atype</span>,
+        <span class="summary-sig-arg">func</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.node-pysrc.html#Node.register_message_handler">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="register_timed"></a><span class="summary-sig-name">register_timed</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">interval</span>,
+        <span class="summary-sig-arg">func</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.node-pysrc.html#Node.register_timed">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="shutdown"></a><span class="summary-sig-name">shutdown</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.node-pysrc.html#Node.shutdown">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="start"></a><span class="summary-sig-name">start</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.node-pysrc.html#Node.start">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr bgcolor="#e8f0f8" >
+  <th colspan="2" class="group-header"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="congress.node.Node-class.html">node.Node</a></th></tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="handlers"></a><span class="summary-name">handlers</span> = <code title="{}"><code class="variable-group">{</code><code class="variable-group">}</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="handshakes"></a><span class="summary-name">handshakes</span> = <code title="[]"><code class="variable-group">[</code><code class="variable-group">]</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="peers"></a><span class="summary-name">peers</span> = <code title="[]"><code class="variable-group">[</code><code class="variable-group">]</code></code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="_hit_peer"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_hit_peer</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">peer</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="congress.congress-pysrc.html#Congress._hit_peer">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Update the node's k-buckets with the peer, using a simplified version
+of the kademlia specification's routine for updating k-buckets.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>peer</code></strong></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_closest_peers"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_closest_peers</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">id</span>,
+        <span class="sig-arg">how_many</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="congress.congress-pysrc.html#Congress._closest_peers">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Given the specified 160-bit ID, use the k-buckets to return, at most,
+how_many closest peers to the ID using a XOR metric (id XOR peer.id)
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>id</code></strong> - 160-bit ID</li>
+        <li><strong class="pname"><code>how_many</code></strong> - The maximum number of peers to return, usually k.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="rpc_get"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">rpc_get</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">key</span>,
+        <span class="sig-arg">callback</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="congress.congress-pysrc.html#Congress.rpc_get">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Since value retrieval is async, provide a callback that will handle
+the value.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>key</code></strong> - String key</li>
+        <li><strong class="pname"><code>callback</code></strong> - Callable to execute when we get the value.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="rpc_store"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">rpc_store</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">key</span>,
+        <span class="sig-arg">value</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="congress.congress-pysrc.html#Congress.rpc_store">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Store hashed key: val with k closest connected peers.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>key</code></strong> - string key</li>
+        <li><strong class="pname"><code>value</code></strong> - Any python value that is json serializable.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="peer_cleanup"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">peer_cleanup</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">peer</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="congress.congress-pysrc.html#Congress.peer_cleanup">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  When error handling or explicit peer removal schedules a peer object
+for removal, this function is called to remove it from all applicable
+buckets by the core node.py removal routine.
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="congress.node.Node-class.html#peer_cleanup">node.Node.peer_cleanup</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="bootstrap_peer"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">bootstrap_peer</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">conn_address</span>,
+        <span class="sig-arg">id</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="congress.congress-pysrc.html#Congress.bootstrap_peer">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Add a peer. This function does not add it to k-buckets,
+as this is handled by the final handshake callback.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>conn_address</code></strong> - (hostname, port) tuple of the peer</li>
+        <li><strong class="pname"><code>id</code></strong> - The ID is supplied if FIND_NODE replies provide the peer.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="_setup_ctl_socket"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_setup_ctl_socket</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">port</span>=<span class="sig-default">29800</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="congress.congress-pysrc.html#Congress._setup_ctl_socket">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Setup a socket to listen for simple control connections.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>port</code></strong> - The port that local connections can use.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">host</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">0.0.0.0</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">port</span>=<span class="sig-default">16800</span>,
+        <span class="sig-arg">initial_peers</span>=<span class="sig-default"><code class="variable-group">[</code><code class="variable-group">]</code></span>,
+        <span class="sig-arg">debug</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">ctl_port</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">pyev_loop</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="congress.congress-pysrc.html#Congress.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>initial_peers</code></strong> - List of (hostname, port) tuples to connect to.</li>
+        <li><strong class="pname"><code>debug</code></strong> - If True, many debug messages will be printed.</li>
+        <li><strong class="pname"><code>ctl_port</code></strong> - Local port for the control socket.</li>
+        <li><strong class="pname"><code>pyev_loop</code></strong> - If you have your own pyev loop to attach the node to,
+supply it here.</li>
+    </ul></dd>
+    <dt>Overrides:
+        <a href="congress.node.Node-class.html#__init__">node.Node.__init__</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://lysol.github.com/congress/">Congress DHT</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sun Feb 20 22:37:06 2011
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
