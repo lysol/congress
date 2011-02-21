@@ -1,13 +1,13 @@
-from node import *
+import sys
 import random
-import argparse
 import hashlib
-import struct
-import pyev
 import socket
 import traceback
-import sys
 import math
+import argparse
+import pyev
+from node import *
+from control import *
 
 k = 20
 a = 3
@@ -22,27 +22,63 @@ RPC_GET_REPLY = 9
 
 
 def sha1_hash(key):
+    """
+    Generate a SHA1 hash for a given string.
+
+    :param key:
+    """
     sha1 = hashlib.sha1()
     sha1.update(key)
     new_id = long(sha1.digest().encode('hex'), 16)
     return new_id
 
 def ping_handler(message, server, peer):
+    """
+    Callback for PING messages.
+    Send back a PONG.
+
+    :param message: PING message
+    :param server: The Congress server
+    :param peer: The peer the message was received from
+    """
     reply = Message(PONG, re=message.id)
     peer.enqueue_message(reply)
 
 def pong_handler(message, server, peer):
+    """
+    Callback for PONG messages.
+    Refresh the k-bucket information for the given peer.
+
+    :param messages: PONG message
+    :param server: The Congress server
+    :param peer: The peer the message was received from
+    """
     if peer.active:
         server._hit_peer(peer)
 
-#def id_handler(message, server, peer):
-#    server._hit_peer(peer)
-
 def handle_rpc_store(message, server, peer):
+    """
+    Callback for STORE messages.
+    Store the hashed key: value in our store.
+
+    :param message: STORE message
+    :param server: The Congress server
+    :param peer: The peer the message was received from
+    """
     for key in message.data['store'].keys():
         server.store[long(key)] = message.data['store'][key]
 
 def handle_rpc_get(message, server, peer):
+    """
+    Callback for GET messages.
+    If we have the value, send it back to the peer.
+    If we don't, build a list of alpha closest peers and send it back to the
+    peer.
+
+    :param message: GET message
+    :param server: The Congress server
+    :param peer: The peer the message was receved from
+    """
     if 'attempt' in message.data.keys():
         attempt = message.data['attempt']
     else:
@@ -63,6 +99,13 @@ def handle_rpc_get(message, server, peer):
         peer.enqueue_message(m)
 
 def value_check(message, server):
+    """
+    Check if a given hashed key and value are present in the store.
+
+    :param message: This function is only called from the GET reply, so the
+        message in the callback is passed to this function.
+    :param server: Same deal as the message, this is the Congress server.
+    """
     for tup in list(server.retrieval_callbacks):
         (key, callback) = tup
         hash_key = sha1_hash(key)
@@ -77,6 +120,16 @@ def value_check(message, server):
     return False
 
 def handle_rpc_get_reply(message, server, peer):
+    """
+    Callback for GET replies.
+    If we get the value back in the message, run value_check.
+    If we get a list of peers, bootstrap them and request the same
+    value.
+
+    :param message: The GET reply itself.
+    :param server: The Congress server
+    :param peer: The peer that sent the message
+    """
     if 'attempt' in message.data.keys():
         attempt = message.data['attempt']
     else:
@@ -109,6 +162,14 @@ def handle_rpc_get_reply(message, server, peer):
 
 
 def handle_rpc_find_node(message, server, peer):
+    """
+    Callback for FIND_NODE messages.
+    Pass back k closest peers to the ID.
+
+    :param message: The FIND_NODE message itself.
+    :param server: The Congress server
+    :param peer: The peer that sent the message.
+    """
     new_id = message.data['node_id']
     closest = server._closest_peers(new_id, k)
     m = Message(RPC_FIND_NODE_REPLY,
@@ -118,6 +179,14 @@ def handle_rpc_find_node(message, server, peer):
     peer.enqueue_message(m)
 
 def handle_rpc_find_node_reply(message, server, peer):
+    """
+    Callback for FIND_NODE replies.
+    Bootstrap any unseen peers.
+
+    :param message: The FIND_NODE reply.
+    :param server: The Congress server
+    :param peer: The peer that sent the reply.
+    """
     peer_tuples = message.data['peers']
     server_ids = [p.id for p in server.peers]
     for (node_id, address, port) in \
@@ -127,6 +196,7 @@ def handle_rpc_find_node_reply(message, server, peer):
 
 
 class CongressPeer(Peer):
+    """Peer subclass for Congress. Currently no real logic is here."""
 
     def __del__(self):
         Peer.__del__(self)
@@ -135,8 +205,16 @@ class CongressPeer(Peer):
         Peer.__init__(self, conn, addr, server)
 
 class Congress(Node):
+    """Main DHT class. The main event loop is a member of this class, and all
+    peers and other pyev callbacks attach to this loop."""
 
     def _hit_peer(self, peer):
+        """
+        Update the node's k-buckets with the peer, using a simplified version
+        of the kademlia specification's routine for updating k-buckets.
+
+        :param peer:
+        """
         if not peer.active:
             self._debug("Peer not active. What.")
             return
@@ -163,6 +241,9 @@ class Congress(Node):
         #        enumerate(self.replacement_buckets))
 
     def _node_id_present(self, node_id):
+        """Determine if any of the connected peers have the specified 160-bit
+        node ID.
+        """
         for bucket in self.buckets:
             for peer in bucket:
                 if type(peer.id) != long:
@@ -172,6 +253,10 @@ class Congress(Node):
         return False
 
     def _conn_present(self, conn):
+        """
+        Determine if the given (address, port) tuple is presently connected
+        via any of the peers.
+        """
         if type(conn) != tuple:
             conn = tuple(conn)
         for bucket in self.buckets:
@@ -187,6 +272,11 @@ class Congress(Node):
         return False
 
     def _make_buckets(self):
+        """
+        At node, start, create 160 k-buckets and 160 replacement buckets.
+        Currently, replacement buckets are not used but the peer is placed into
+        them if a bucket's peer count is over k.
+        """
         self.buckets = []
         self.replacement_buckets = []
         for i in range(160):
@@ -194,6 +284,13 @@ class Congress(Node):
             self.replacement_buckets.append([])
 
     def _closest_peers(self, id, how_many):
+        """
+        Given the specified 160-bit ID, use the k-buckets to return, at most,
+        how_many closest peers to the ID using a XOR metric (id XOR peer.id)
+
+        :param id: 160-bit ID
+        :param how_many: The maximum number of peers to return, usually k.
+        """
         self._debug("Finding %d closest peers." % how_many)
         try:
             dist = self.id ^ id
@@ -212,7 +309,11 @@ class Congress(Node):
 
     def rpc_get(self, key, callback):
         """Since value retrieval is async, provide a callback that will handle
-        the value."""
+        the value.
+
+        :param key: String key
+        :param callback: Callable to execute when we get the value.
+        """
         new_id = sha1_hash(key)
         if new_id in self.store.keys():
             callback(key, self.store[new_id])
@@ -227,7 +328,12 @@ class Congress(Node):
         self.retrieval_callbacks.append((key, callback))
 
     def rpc_store(self, key, value):
-        # This "works"
+        """
+        Store hashed key: val with k closest connected peers.
+
+        :param key: string key
+        :param value: Any python value that is json serializable.
+        """
         new_id = sha1_hash(key)
         for peer in self._closest_peers(new_id, k):
             message = Message(RPC_STORE, data={'store': {str(new_id): value}})
@@ -235,6 +341,11 @@ class Congress(Node):
         self.store[new_id] = value
 
     def peer_cleanup(self, peer):
+        """
+        When error handling or explicit peer removal schedules a peer object
+        for removal, this function is called to remove it from all applicable
+        buckets by the core node.py removal routine.
+        """
         self._debug("Entering Congress peer cleanup.")
         for (i, bucket) in enumerate(self.buckets):
             for p in bucket:
@@ -255,6 +366,13 @@ class Congress(Node):
         del(peer)
 
     def bootstrap_peer(self, conn_address, id=None):
+        """
+        Add a peer. This function does not add it to k-buckets,
+        as this is handled by the final handshake callback.
+
+        :param conn_address: (hostname, port) tuple of the peer
+        :param id: The ID is supplied if FIND_NODE replies provide the peer.
+        """
         try:
             speer = self.add_peer(conn_address, connect=True)
         except socket.error:
@@ -264,10 +382,22 @@ class Congress(Node):
         return speer
 
     def _setup_ctl_socket(self, port=29800):
+        """
+        Setup a socket to listen for simple control connections.
+
+        :param port: The port that local connections can use.
+        """
         self._ctl = Controller(self, port=port)
 
     def __init__(self, host='0.0.0.0', port=16800, initial_peers=[],
         debug=False, ctl_port=None, pyev_loop=None):
+        """
+        :param initial_peers: List of (hostname, port) tuples to connect to.
+        :param debug: If True, many debug messages will be printed.
+        :param ctl_port: Local port for the control socket.
+        :param pyev_loop: If you have your own pyev loop to attach the node to,
+            supply it here.
+        """
         Node.__init__(self, (host, port), client_class=CongressPeer,
             debug=debug, pyev_loop=pyev_loop)
         self._gen_id()
@@ -289,6 +419,11 @@ class Congress(Node):
         # Once we bootstrap a peer, ask them for all peers closest to
         # our own id.
         def node_getter(i_peer, i_server):
+            """
+            FIND_NODE callback for the initial handshake.
+            :param i_peer: The peer the handshake is with.
+            :param i_server: Our node object.
+            """
             i_server._hit_peer(i_peer)
             new_m = Message(RPC_FIND_NODE, data={'node_id': i_server.id})
             i_peer.enqueue_message(new_m)
@@ -301,91 +436,6 @@ class Congress(Node):
         for conn in initial_peers:
             self.bootstrap_peer(conn)
 
-class CtlClient:
-
-    def send(self, message):
-        self.outgoing.append(message)
-
-    def _ctl_ev(self, watcher, events):
-        if events & pyev.EV_READ:
-            # do stuff
-            try:
-                buffer = self.socket.recv(1024)
-                if buffer != '':
-                    self.curr_buff += buffer
-                    if '\n' in self.curr_buff:
-                        x = self.curr_buff.split('\n')
-                        message = x[0] + '\n'
-                        self.curr_buff = '\n'.join(x[1:])
-                        self.parent.handle_message(message, self)
-                else:
-                    print 'A connection was closed.'
-                    watcher.stop()
-                    self.socket.close()
-            except EOFError:
-                watcher.stop()
-        elif events & pyev.EV_WRITE:
-            if len(self.outgoing) > 0:
-                message = self.outgoing.pop(0)
-                self.socket.send(message)
-
-    def __init__(self, socket, address, controller):
-        self.socket = socket
-        self.address = address
-        self.loop = controller.server._loop
-        self._ctlwatcher = pyev.Io(self.socket, pyev.EV_READ | pyev.EV_WRITE,
-           self.loop, self._ctl_ev)
-        self.curr_buff = ''
-        self.parent = controller
-        self.outgoing = []
-        self._ctlwatcher.start()
-
-class Controller:
-
-    def handle_message(self, message, client):
-        args = message.split()
-        if args[0] == 'store':
-            self.server._debug('Storing a value.')
-            key = args[1]
-            val = args[2:]
-            self.server.rpc_store(key, val)
-            client.send('Value stored.\n')
-        if args[0] == 'get':
-            self.server._debug('Getting a value.')
-            key = args[1]
-            def senditback(hash_key, val):
-                client.send('GET %s: %s (%s)\n' % (key, val, hash_key))
-            self.server.rpc_get(key, senditback)
-            self.server._debug('Finished setting up callback.')
-        if args[0] == 'peer':
-            conn = (args[1], int(args[2]))
-            print conn
-            self.server.bootstrap_peer(conn)
-            client.send('Attempted to peer with %s\n' % conn)
-        if args[0] == 'listpeers':
-            for peer in self.server.peers:
-                client.send('%s: S: %s A: %s\n' % (str(peer.id),
-                    repr(peer.server_address), repr(peer.address)))
-        if args[0] == 'listqueues':
-            for peer in self.server.peers:
-                client.send('Peer Outgoing %s: %s\n' % (str(peer.id), peer.outgoing))
-                client.send('Peer Current Buffer: %s\n' % peer.curr_buff)
-
-    def _ctl_ev(self, watcher, events):
-        if events & pyev.EV_READ:
-            conn, addr = self._socket.accept()
-            self.clients.append(CtlClient(conn, addr, self))
-
-    def __init__(self, server, port=29800):
-        self.clients = []
-        self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self._socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self._socket.bind(('127.0.0.1', port))
-        self._socket.listen(1)
-        self._ctlwatcher = pyev.Io(self._socket,
-            pyev.EV_READ | pyev.EV_WRITE, server._loop, self._ctl_ev)
-        self._ctlwatcher.start()
-        self.server = server
 
 def main():
     parser = argparse.ArgumentParser(description='Run a Congress instance.')
