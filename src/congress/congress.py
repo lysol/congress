@@ -388,7 +388,7 @@ class Congress(Node):
                 'source_node_id': self.id, 'chat_message': chat_message})
             matched_peers[0].enqueue_message(m)
         else:
-            closest = self._closest_peers(node_id, e)
+            closest = self._closest_peers(node_id, a)
             m = Message(RPC_CHAT, data={'target_node_id': node_id,
                 'source_node_id': self.id, 'chat_message': chat_message})
             for cpeer in closest:
