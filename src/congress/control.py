@@ -1,4 +1,5 @@
 import pyev
+import socket
 
 class CtlClient:
     """Clients connected to the control port are interacted with via this
@@ -93,6 +94,10 @@ class Controller:
             for peer in self.server.peers:
                 client.send('Peer Outgoing %s: %s\n' % (str(peer.id), peer.outgoing))
                 client.send('Peer Current Buffer: %s\n' % peer.curr_buff)
+        if args[0] == 'chat':
+            target_node = long(args[1])
+            message = ' '.join(args[2:])
+            self.server.rpc_chat(target_node, message)
 
     def _ctl_ev(self, watcher, events):
         """
@@ -113,3 +118,7 @@ class Controller:
             pyev.EV_READ | pyev.EV_WRITE, server._loop, self._ctl_ev)
         self._ctlwatcher.start()
         self.server = server
+        def chat_callback(source_node, chat_message, server, peer):
+            for client in self.clients:
+                client.send("RPC CHAT %s: %s\n" % (source_node, chat_message))
+        self.server.register_chat_callback(chat_callback)

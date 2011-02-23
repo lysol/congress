@@ -3,7 +3,7 @@
 from distutils.core import setup
 setup(name='congress',
     version='0.1.0',
-    py_modules=['congress'],
+    py_modules=['congress', 'node'],
     requires=['pyev']
     )
 

@@ -19,7 +19,7 @@ RPC_FIND_NODE = 6
 RPC_GET = 7
 RPC_FIND_NODE_REPLY = 8
 RPC_GET_REPLY = 9
-
+RPC_CHAT = 10
 
 def sha1_hash(key):
     """
@@ -67,6 +67,39 @@ def handle_rpc_store(message, server, peer):
     """
     for key in message.data['store'].keys():
         server.store[long(key)] = message.data['store'][key]
+
+def chat_handler(message, server, peer):
+    """
+    Callback for CHAT messages. Congress makes no attempt to encrypt or
+    secure the message from eavesdropping, and leaves any implementation of
+    chat message security to the developer.
+
+    To handle chat messages intended for the node itself, register your
+    callback with register_chat_callback.
+
+    :param message: CHAT message
+    :param server: The Congress server
+    :param peer: The peer hte message was received from
+    """
+    target_node = message.data['target_node_id']
+    source_node = message.data['source_node_id']
+    chat_message = message.data['chat_message']
+    if target_node == server.id:
+        for cb in server.chat_callbacks:
+            try:
+                cb(source_node, chat_message, server, peer)
+            except Exception, e:
+                traceback.print_exc(file=sys.stderr)
+    else:
+        closest = server._closest_peers(target_node, a)
+        for npeer in closest:
+            m = Message(RPC_CHAT, data={
+                'target_node_id': target_node,
+                'source_node_id': source_node,
+                'chat_message': chat_message
+                })
+            npeer.enqueue_message(m)
+
 
 def handle_rpc_get(message, server, peer):
     """
@@ -340,6 +373,38 @@ class Congress(Node):
             peer.enqueue_message(message)
         self.store[new_id] = value
 
+    def rpc_chat(self, node_id, chat_message):
+        """
+        Initiate an RPC_CHAT message.
+
+        :param node_id: The 160-bit ID of the peer you'd like to send a 
+            message to. It need not be a connected peer, just a known ID.
+        :param chat_message: The message to send.
+        """
+
+        matched_peers = filter(lambda p: p.id == node_id, self.peers)
+        if len(matched_peers) > 0:
+            m = Message(RPC_CHAT, data={'target_node_id': node_id,
+                'source_node_id': self.id, 'chat_message': chat_message})
+            matched_peers[0].enqueue_message(m)
+        else:
+            closest = self._closest_peers(node_id, e)
+            m = Message(RPC_CHAT, data={'target_node_id': node_id,
+                'source_node_id': self.id, 'chat_message': chat_message})
+            for cpeer in closest:
+                cpeer.enqueue_message(m)
+
+    def register_chat_callback(self, callback):
+        """
+        Store a callable in our chat callbacks list. Each will be called in
+        order of registration, when we receive an RPC_CHAT with a
+        target_node_id that matches our server's 160-bit ID.
+
+        The signature of the callable should be as follows:
+            cb(source_node, chat_message, server, peer)
+        """
+        self.chat_callbacks.append(callback)
+
     def peer_cleanup(self, peer):
         """
         When error handling or explicit peer removal schedules a peer object
@@ -413,8 +478,9 @@ class Congress(Node):
         self.register_message_handler(RPC_FIND_NODE, handle_rpc_find_node)
         self.register_message_handler(RPC_FIND_NODE_REPLY,
             handle_rpc_find_node_reply)
-        #self.register_message_handler(ID_NOTIFY, id_handler)
+        self.register_message_handler(RPC_CHAT, chat_handler)
         self.retrieval_callbacks = []
+        self.chat_callbacks = []
 
         # Once we bootstrap a peer, ask them for all peers closest to
         # our own id.
