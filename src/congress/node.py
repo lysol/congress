@@ -114,7 +114,7 @@ class Peer:
                 self.stop()
                 self._parent._remove_peer(self)
             except socket.error:
-                traceback.print_exc(file=sys.stderr)
+                #traceback.print_exc(file=sys.stderr)
                 self._parent._debug("Removing peer due to socket error.")
                 self._parent._remove_peer(self)
             except Exception, e:

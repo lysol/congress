@@ -3,11 +3,11 @@ import random
 import hashlib
 import socket
 import traceback
-import math
 import argparse
 import pyev
 from node import *
 from control import *
+from _congress import * 
 
 k = 20
 a = 3
@@ -255,8 +255,8 @@ class Congress(Node):
             self._debug("Peer ID None during _hit_peer.")
             return
         dist = peer.id ^ self.id
-        matching_buckets = filter(lambda (i, b): dist > 2**i and \
-            dist < 2**(i+1), enumerate(self.buckets))
+        matching_buckets = filter(lambda (i, b): bucket_leaf(dist, i),
+            enumerate(self.buckets))
         for i, bucket in matching_buckets: 
             if peer in bucket:
                 bucket.remove(peer)
@@ -328,7 +328,7 @@ class Congress(Node):
         try:
             dist = self.id ^ id
             cl_buckets = [t[1] for t in sorted(enumerate(self.buckets),
-                key=lambda x: math.fabs(dist - 2**x[0]))]
+                key=lambda x: bucket_sort(dist, x[0]))]
             closest = []
             i = 0
             while len(closest) < k and i < 160:

@@ -1,21 +1,19 @@
 #!/usr/bin/env python
 
 from distutils.core import setup
-setup(name='congress',
-    version='0.1.0',
-    py_modules=['congress', 'node'],
-    requires=['pyev']
-    )
+from distutils.extension import Extension
+from Cython.Distutils import build_ext
 
 setup(name='congress',
       version='0.1.0',
+      cmdclass = {"build_ext": build_ext},
       description='Kademlia-like DHT Implementation',
       author='Derek Arnold',
       author_email='derek@brainindustries.com',
       url='http://lysol.github.com/congress',
       packages=['congress'],
       package_dir={'congress': 'src/congress'},
-      include_package_data=True,
+      ext_modules=[Extension("_congress", ["src/congress/_congress.pyx"])],
       license='BSD',
       classifiers=[
         "Development Status :: 3 - Alpha",
