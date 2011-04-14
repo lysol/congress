@@ -157,7 +157,7 @@ def handle_rpc_get_reply(message, server, peer):
     Callback for GET replies.
     If we get the value back in the message, run value_check.
     If we get a list of peers, bootstrap them and request the same
-    value.
+    value, but only if we don't have the value.
 
     :param message: The GET reply itself.
     :param server: The Congress server
@@ -177,18 +177,26 @@ def handle_rpc_get_reply(message, server, peer):
             return
     # got a peer list instead
     else:
-        if value_check(message, server):
-            return
-        if attempt > k:
+        if long(message.data['key']) in server.store or attempt > k:
             return
         for (node_id, address, port) in message.data['peers']:
+            node_id = long(node_id)
+            if node_id == server.id:
+                continue
             request = Message(RPC_GET,
                 data={'key': message.data['key'], 'attempt': attempt + 1},
                 re=message.id)
-            if node_id not in [pee.id for pee in server.peers]:
+            server._debug("Attempting to bootstrap peer %s " % str(node_id) + \
+                "via RPC_GET_REPLY message.")
+            if node_id not in [pee.id for pee in server.peers] and \
+                node_id != server.id:
+                server._debug('New node.')
+                def request_storage(xxpeer, server):
+                    xxpeer.enqueue_message(request)
+                server.register_handshake(request_storage, peer=node_id)
                 xpeer = server.bootstrap_peer((address, port), id=node_id)
-                xpeer.enqueue_message(request)
             else:
+                server._debug('Existing node.')
                 matched = filter(lambda pee: pee.id == node_id, server.peers)
                 if len(matched) > 0:
                     matched[0].enqueue_message(request)
@@ -240,6 +248,11 @@ class CongressPeer(Peer):
 class Congress(Node):
     """Main DHT class. The main event loop is a member of this class, and all
     peers and other pyev callbacks attach to this loop."""
+
+    def _debug(self, message):
+        Node._debug(self, message)
+        if self._ctl is not None:
+           self._ctl.broadcast(message)
 
     def _hit_peer(self, peer):
         """
@@ -316,7 +329,7 @@ class Congress(Node):
             self.buckets.append([])
             self.replacement_buckets.append([])
 
-    def _closest_peers(self, id, how_many):
+    def _closest_peers(self, id, how_many, filter_id=None):
         """
         Given the specified 160-bit ID, use the k-buckets to return, at most,
         how_many closest peers to the ID using a XOR metric (id XOR peer.id)
@@ -332,7 +345,8 @@ class Congress(Node):
             closest = []
             i = 0
             while len(closest) < k and i < 160:
-                closest.extend(filter(lambda p: p.active, cl_buckets[i]))
+                closest.extend(filter(lambda p: p.active and p.id != filter_id,
+                    cl_buckets[i]))
                 i += 1
             if len(closest) > k:
                 closest = closest[:k]
@@ -415,17 +429,13 @@ class Congress(Node):
         for (i, bucket) in enumerate(self.buckets):
             for p in bucket:
                 if p == peer or \
-                p.id == peer.id or \
-                p.server_address == peer.server_address or \
-                p.address == peer.address:
+                p.id == peer.id:
                     self._debug("Removing peer from bucket %d" % i)
                     self.buckets[i].remove(p)
         for (i, rbucket) in enumerate(self.replacement_buckets):
             for p in rbucket:
                 if p == peer or \
-                p.id == peer.id or \
-                p.server_address == peer.server_address or \
-                p.address == peer.address:
+                p.id == peer.id:
                     self._debug("Removing peer from rbucket %d" % i)
                     self.replacement_buckets[i].remove(p)
         del(peer)
@@ -455,7 +465,7 @@ class Congress(Node):
         self._ctl = Controller(self, port=port)
 
     def __init__(self, host='0.0.0.0', port=16800, initial_peers=[],
-        debug=False, ctl_port=None, pyev_loop=None):
+        debug=False, ctl_port=None, pyev_loop=None, debug_file=None):
         """
         :param initial_peers: List of (hostname, port) tuples to connect to.
         :param debug: If True, many debug messages will be printed.
@@ -464,7 +474,7 @@ class Congress(Node):
             supply it here.
         """
         Node.__init__(self, (host, port), client_class=CongressPeer,
-            debug=debug, pyev_loop=pyev_loop)
+            debug=debug, pyev_loop=pyev_loop, debug_file=debug_file)
         self._gen_id()
         self._make_buckets()
         self.store = {}
@@ -498,6 +508,9 @@ class Congress(Node):
 
         if ctl_port is not None:
             self._setup_ctl_socket(ctl_port)
+        else:
+            self._ctl = None
+
 
         for conn in initial_peers:
             self.bootstrap_peer(conn)
@@ -515,6 +528,8 @@ def main():
         action='store_true', default=False)
     parser.add_argument('-c', '--ctl', help='Enable control socket on'
         'port 29800', default=None, type=int)
+    parser.add_argument('-F', '--debugfile', help='Debug output is saved'
+        'in the argument to this option', default=None)
     args = parser.parse_args()
 
     if args.peer is not None:
@@ -525,7 +540,7 @@ def main():
         peer_conns = []
 
     server = Congress(host=args.host, port=args.port, initial_peers=peer_conns,
-        debug=args.debug, ctl_port=args.ctl)
+        debug=args.debug, ctl_port=args.ctl, debug_file=args.debugfile)
     server.start()
 
 if __name__ == "__main__":

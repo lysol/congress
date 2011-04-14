@@ -63,6 +63,10 @@ class CtlClient:
 
 class Controller:
 
+    def broadcast(self, message):
+        for client in self.clients:
+            client.send(message + '\n')
+
     def handle_message(self, message, client):
         """
         When we receive a message, parse commands from it.
@@ -83,9 +87,8 @@ class Controller:
             self.server._debug('Finished setting up callback.')
         if args[0] == 'peer':
             conn = (args[1], int(args[2]))
-            print conn
             self.server.bootstrap_peer(conn)
-            client.send('Attempted to peer with %s\n' % conn)
+            client.send('Attempted to peer with %s\n' % str(conn))
         if args[0] == 'listpeers':
             for peer in self.server.peers:
                 client.send('%s: S: %s A: %s\n' % (str(peer.id),
