@@ -2,10 +2,10 @@ Congress
 ========
 
 Congress is my haphazard attempt at a Kademlia-like library for building
-P2P overlay networks, which isn't anything original.
+P2P overlay networks, which isn't anything original. I like Entangled, but hate
+Twisted, so I used pyev, which I find to be much less ambitious and not as
+big in the hips.
 
-Ultimately, however, I don't have the resources to test hundreds of nodes, so
-this probably will never work properly.
 
 Requirements
 ============
@@ -30,6 +30,19 @@ python -m congress.congress --host 127.0.0.1 --port 16800 --ctl 19800 \
     --peer 1.2.3.4 16800 --debug
 
 Debug will spit out a LOT of information.
+
+You can also use the class on its own, but you'll have to either tie your
+code into the libev event loop, or use the folowing libev flags:
+    node._loop.loop(flags=pyev.EVLOOP_ONESHOT | pyev.EVLOOP_NONBLOCK)
+inside of your own event loop.
+
+When using the rpc_get method, you must provide a callback that accepts
+the original key and value. Presently there is no expiration of tuples,
+but if this happens it will become a configurable option.
+
+At some point there will be more storage options, as well as the ability
+to reuse the node's ID, if desired, which is more in-line with the Kademlia
+spec.
 
 Control Port
 ============

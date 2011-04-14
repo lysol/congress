@@ -139,9 +139,11 @@ def value_check(message, server):
         message in the callback is passed to this function.
     :param server: Same deal as the message, this is the Congress server.
     """
+    server._debug('Retrieval callback length: %d' % \
+        len(server.retrieval_callbacks))
     for tup in list(server.retrieval_callbacks):
         (key, callback) = tup
-        hash_key = sha1_hash(key)
+        hash_key = long(sha1_hash(key))
         server._debug("Key: %s\nStore: %s" % (hash_key, server.store))
         if hash_key in [long(yek) for yek in server.store.keys()]:
             try:
@@ -251,7 +253,7 @@ class Congress(Node):
 
     def _debug(self, message):
         Node._debug(self, message)
-        if self._ctl is not None:
+        if self._ctl is not None and self.debug:
            self._ctl.broadcast(message)
 
     def _hit_peer(self, peer):
