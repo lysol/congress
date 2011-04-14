@@ -3,7 +3,7 @@
           "DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>congress.node.Peer</title>
+  <title>congress.node.TimeoutCallback</title>
   <link rel="stylesheet" href="epydoc.css" type="text/css" />
   <script type="text/javascript" src="epydoc.js"></script>
 </head>
@@ -41,7 +41,7 @@
       <span class="breadcrumbs">
         Package&nbsp;congress ::
         <a href="congress.node-module.html">Module&nbsp;node</a> ::
-        Class&nbsp;Peer
+        Class&nbsp;TimeoutCallback
       </span>
     </td>
     <td>
@@ -54,14 +54,7 @@
   </tr>
 </table>
 <!-- ==================== CLASS DESCRIPTION ==================== -->
-<h1 class="epydoc">Class Peer</h1><p class="nomargin-top"><span class="codelink"><a href="congress.node-pysrc.html#Peer">source&nbsp;code</a></span></p>
-<dl><dt>Known Subclasses:</dt>
-<dd>
-      <ul class="subclass-list">
-<li><a href="congress.congress.CongressPeer-class.html">congress.CongressPeer</a></li>  </ul>
-</dd></dl>
-
-<hr />
+<h1 class="epydoc">Class TimeoutCallback</h1><p class="nomargin-top"><span class="codelink"><a href="congress.node-pysrc.html#TimeoutCallback">source&nbsp;code</a></span></p>
 <!-- ==================== INSTANCE METHODS ==================== -->
 <a name="section-InstanceMethods"></a>
 <table class="summary" border="1" cellpadding="3"
@@ -85,9 +78,9 @@
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
-          <td><span class="summary-sig"><a name="__del__"></a><span class="summary-sig-name">__del__</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td><span class="summary-sig"><a name="check"></a><span class="summary-sig-name">check</span>(<span class="summary-sig-arg">self</span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="congress.node-pysrc.html#Peer.__del__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="congress.node-pysrc.html#TimeoutCallback.check">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -102,78 +95,13 @@
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a name="__init__"></a><span class="summary-sig-name">__init__</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">socket</span>,
-        <span class="summary-sig-arg">address</span>,
-        <span class="summary-sig-arg">parent</span>)</span></td>
+        <span class="summary-sig-arg">message_id</span>,
+        <span class="summary-sig-arg">func</span>,
+        <span class="summary-sig-arg">timeout</span>,
+        <span class="summary-sig-arg">args</span>=<span class="summary-sig-default"><code class="variable-group">[</code><code class="variable-group">]</code></span>,
+        <span class="summary-sig-arg">kwargs</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-group">}</code></span>)</span></td>
           <td align="right" valign="top">
-            <span class="codelink"><a href="congress.node-pysrc.html#Peer.__init__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="__repr__"></a><span class="summary-sig-name">__repr__</span>(<span class="summary-sig-arg">self</span>)</span></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="congress.node-pysrc.html#Peer.__repr__">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="_sock_ev"></a><span class="summary-sig-name">_sock_ev</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">watcher</span>,
-        <span class="summary-sig-arg">events</span>)</span></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="congress.node-pysrc.html#Peer._sock_ev">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="enqueue_message"></a><span class="summary-sig-name">enqueue_message</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">message</span>)</span></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="congress.node-pysrc.html#Peer.enqueue_message">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="stop"></a><span class="summary-sig-name">stop</span>(<span class="summary-sig-arg">self</span>)</span></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="congress.node-pysrc.html#Peer.stop">source&nbsp;code</a></span>
+            <span class="codelink"><a href="congress.node-pysrc.html#TimeoutCallback.__init__">source&nbsp;code</a></span>
             
           </td>
         </tr>

@@ -88,6 +88,23 @@ peers and other pyev callbacks attach to this loop.
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
+          <td><span class="summary-sig"><a href="congress.congress.Congress-class.html#_debug" class="summary-sig-name" onclick="show_private();">_debug</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">message</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#Congress._debug">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
           <td><span class="summary-sig"><a href="congress.congress.Congress-class.html#_hit_peer" class="summary-sig-name" onclick="show_private();">_hit_peer</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">peer</span>)</span><br />
       Update the node's k-buckets with the peer, using a simplified version
@@ -166,7 +183,8 @@ them if a bucket's peer count is over k.</td>
         <tr>
           <td><span class="summary-sig"><a href="congress.congress.Congress-class.html#_closest_peers" class="summary-sig-name" onclick="show_private();">_closest_peers</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">id</span>,
-        <span class="summary-sig-arg">how_many</span>)</span><br />
+        <span class="summary-sig-arg">how_many</span>,
+        <span class="summary-sig-arg">filter_id</span>=<span class="summary-sig-default">None</span>)</span><br />
       Given the specified 160-bit ID, use the k-buckets to return, at most,
 how_many closest peers to the ID using a XOR metric (id XOR peer.id)</td>
           <td align="right" valign="top">
@@ -210,6 +228,45 @@ the value.</td>
       Store hashed key: val with k closest connected peers.</td>
           <td align="right" valign="top">
             <span class="codelink"><a href="congress.congress-pysrc.html#Congress.rpc_store">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="congress.congress.Congress-class.html#rpc_chat" class="summary-sig-name">rpc_chat</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">node_id</span>,
+        <span class="summary-sig-arg">chat_message</span>)</span><br />
+      Initiate an RPC_CHAT message.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#Congress.rpc_chat">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="congress.congress.Congress-class.html#register_chat_callback" class="summary-sig-name">register_chat_callback</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">callback</span>)</span><br />
+      Store a callable in our chat callbacks list. Each will be called in
+order of registration, when we receive an RPC_CHAT with a
+target_node_id that matches our server's 160-bit ID.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.congress-pysrc.html#Congress.register_chat_callback">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -287,7 +344,8 @@ as this is handled by the final handshake callback.</td>
         <span class="summary-sig-arg">initial_peers</span>=<span class="summary-sig-default"><code class="variable-group">[</code><code class="variable-group">]</code></span>,
         <span class="summary-sig-arg">debug</span>=<span class="summary-sig-default">False</span>,
         <span class="summary-sig-arg">ctl_port</span>=<span class="summary-sig-default">None</span>,
-        <span class="summary-sig-arg">pyev_loop</span>=<span class="summary-sig-default">None</span>)</span></td>
+        <span class="summary-sig-arg">pyev_loop</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">debug_file</span>=<span class="summary-sig-default">None</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="congress.congress-pysrc.html#Congress.__init__">source&nbsp;code</a></span>
             
@@ -300,23 +358,6 @@ as this is handled by the final handshake callback.</td>
 <tr bgcolor="#e8f0f8" >
   <th colspan="2" class="group-header"
     >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="congress.node.Node-class.html">node.Node</a></th></tr>
-<tr class="private">
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-      <table width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td><span class="summary-sig"><a name="_debug"></a><span class="summary-sig-name">_debug</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">message</span>)</span></td>
-          <td align="right" valign="top">
-            <span class="codelink"><a href="congress.node-pysrc.html#Node._debug">source&nbsp;code</a></span>
-            
-          </td>
-        </tr>
-      </table>
-      
-    </td>
-  </tr>
 <tr class="private">
     <td width="15%" align="right" valign="top" class="summary">
       <span class="summary-type">&nbsp;</span>
@@ -429,6 +470,22 @@ as this is handled by the final handshake callback.</td>
     </td><td class="summary">
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
+          <td><span class="summary-sig"><a name="debug_peers"></a><span class="summary-sig-name">debug_peers</span>(<span class="summary-sig-arg">self</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.node-pysrc.html#Node.debug_peers">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
           <td><span class="summary-sig"><a name="enqueue_message"></a><span class="summary-sig-name">enqueue_message</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">message</span>)</span></td>
           <td align="right" valign="top">
@@ -465,7 +522,8 @@ as this is handled by the final handshake callback.</td>
       <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td><span class="summary-sig"><a name="register_handshake"></a><span class="summary-sig-name">register_handshake</span>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">func</span>)</span><br />
+        <span class="summary-sig-arg">func</span>,
+        <span class="summary-sig-arg">peer</span>=<span class="summary-sig-default">None</span>)</span><br />
       Any time a new incoming connectin is made, the argument will be
 executed with the arguments peer and the server itself.</td>
           <td align="right" valign="top">
@@ -506,6 +564,26 @@ executed with the arguments peer and the server itself.</td>
         <span class="summary-sig-arg">func</span>)</span></td>
           <td align="right" valign="top">
             <span class="codelink"><a href="congress.node-pysrc.html#Node.register_message_handler">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="register_message_timeout"></a><span class="summary-sig-name">register_message_timeout</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">message</span>,
+        <span class="summary-sig-arg">func</span>,
+        <span class="summary-sig-arg">peer</span>,
+        <span class="summary-sig-arg">timeout</span>=<span class="summary-sig-default">3</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="congress.node-pysrc.html#Node.register_message_timeout">source&nbsp;code</a></span>
             
           </td>
         </tr>
@@ -564,48 +642,6 @@ executed with the arguments peer and the server itself.</td>
     </td>
   </tr>
 </table>
-<!-- ==================== CLASS VARIABLES ==================== -->
-<a name="section-ClassVariables"></a>
-<table class="summary" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr bgcolor="#70b0f0" class="table-header">
-  <td colspan="2" class="table-header">
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr valign="top">
-        <td align="left"><span class="table-header">Class Variables</span></td>
-        <td align="right" valign="top"
-         ><span class="options">[<a href="#section-ClassVariables"
-         class="privatelink" onclick="toggle_private();"
-         >hide private</a>]</span></td>
-      </tr>
-    </table>
-  </td>
-</tr>
-<tr bgcolor="#e8f0f8" >
-  <th colspan="2" class="group-header"
-    >&nbsp;&nbsp;&nbsp;&nbsp;Inherited from <a href="congress.node.Node-class.html">node.Node</a></th></tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="handlers"></a><span class="summary-name">handlers</span> = <code title="{}"><code class="variable-group">{</code><code class="variable-group">}</code></code>
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="handshakes"></a><span class="summary-name">handshakes</span> = <code title="[]"><code class="variable-group">[</code><code class="variable-group">]</code></code>
-    </td>
-  </tr>
-<tr>
-    <td width="15%" align="right" valign="top" class="summary">
-      <span class="summary-type">&nbsp;</span>
-    </td><td class="summary">
-        <a name="peers"></a><span class="summary-name">peers</span> = <code title="[]"><code class="variable-group">[</code><code class="variable-group">]</code></code>
-    </td>
-  </tr>
-</table>
 <!-- ==================== METHOD DETAILS ==================== -->
 <a name="section-MethodDetails"></a>
 <table class="details" border="1" cellpadding="3"
@@ -624,6 +660,29 @@ executed with the arguments peer and the server itself.</td>
   </td>
 </tr>
 </table>
+<a name="_debug"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_debug</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">message</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="congress.congress-pysrc.html#Congress._debug">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  
+  <dl class="fields">
+    <dt>Overrides:
+        <a href="congress.node.Node-class.html#_debug" onclick="show_private();">node.Node._debug</a>
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
 <a name="_hit_peer"></a>
 <div class="private">
 <table class="details" border="1" cellpadding="3"
@@ -658,7 +717,8 @@ of the kademlia specification's routine for updating k-buckets.
   <tr valign="top"><td>
   <h3 class="epydoc"><span class="sig"><span class="sig-name">_closest_peers</span>(<span class="sig-arg">self</span>,
         <span class="sig-arg">id</span>,
-        <span class="sig-arg">how_many</span>)</span>
+        <span class="sig-arg">how_many</span>,
+        <span class="sig-arg">filter_id</span>=<span class="sig-default">None</span>)</span>
   </h3>
   </td><td align="right" valign="top"
     ><span class="codelink"><a href="congress.congress-pysrc.html#Congress._closest_peers">source&nbsp;code</a></span>&nbsp;
@@ -726,6 +786,59 @@ the value.
         <li><strong class="pname"><code>key</code></strong> - string key</li>
         <li><strong class="pname"><code>value</code></strong> - Any python value that is json serializable.</li>
     </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="rpc_chat"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">rpc_chat</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">node_id</span>,
+        <span class="sig-arg">chat_message</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="congress.congress-pysrc.html#Congress.rpc_chat">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  Initiate an RPC_CHAT message.
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>node_id</code></strong> - The 160-bit ID of the peer you'd like to send a
+message to. It need not be a connected peer, just a known ID.</li>
+        <li><strong class="pname"><code>chat_message</code></strong> - The message to send.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="register_chat_callback"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">register_chat_callback</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">callback</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="congress.congress-pysrc.html#Congress.register_chat_callback">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Store a callable in our chat callbacks list. Each will be called in
+order of registration, when we receive an RPC_CHAT with a
+target_node_id that matches our server's 160-bit ID.</p>
+<dl class="rst-docutils">
+<dt>The signature of the callable should be as follows:</dt>
+<dd>cb(source_node, chat_message, server, peer)</dd>
+</dl>
+  <dl class="fields">
   </dl>
 </td></tr></table>
 </div>
@@ -818,7 +931,8 @@ as this is handled by the final handshake callback.
         <span class="sig-arg">initial_peers</span>=<span class="sig-default"><code class="variable-group">[</code><code class="variable-group">]</code></span>,
         <span class="sig-arg">debug</span>=<span class="sig-default">False</span>,
         <span class="sig-arg">ctl_port</span>=<span class="sig-default">None</span>,
-        <span class="sig-arg">pyev_loop</span>=<span class="sig-default">None</span>)</span>
+        <span class="sig-arg">pyev_loop</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">debug_file</span>=<span class="sig-default">None</span>)</span>
     <br /><em class="fname">(Constructor)</em>
   </h3>
   </td><td align="right" valign="top"
@@ -871,7 +985,7 @@ supply it here.</li>
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">
-    Generated by Epydoc 3.0.1 on Sun Feb 20 22:37:06 2011
+    Generated by Epydoc 3.0.1 on Thu Apr 14 14:53:08 2011
     </td>
     <td align="right" class="footer">
       <a target="mainFrame" href="http://epydoc.sourceforge.net"
