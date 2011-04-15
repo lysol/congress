@@ -388,6 +388,8 @@ class Congress(Node):
             message = Message(RPC_STORE, data={'store': {str(new_id): value}})
             peer.enqueue_message(message)
         self.store[new_id] = value
+        if hasattr(self.store, 'sync'):
+            self.store.sync()
 
     def rpc_chat(self, node_id, chat_message):
         """
@@ -467,7 +469,8 @@ class Congress(Node):
         self._ctl = Controller(self, port=port)
 
     def __init__(self, host='0.0.0.0', port=16800, initial_peers=[],
-        debug=False, ctl_port=None, pyev_loop=None, debug_file=None):
+        debug=False, ctl_port=None, pyev_loop=None, debug_file=None,
+        storage_class=dict):
         """
         :param initial_peers: List of (hostname, port) tuples to connect to.
         :param debug: If True, many debug messages will be printed.
@@ -479,7 +482,7 @@ class Congress(Node):
             debug=debug, pyev_loop=pyev_loop, debug_file=debug_file)
         self._gen_id()
         self._make_buckets()
-        self.store = {}
+        self.store = storage_class()
         self.register_message_handler(PING, ping_handler)
         self.register_message_handler(PONG, pong_handler)
 

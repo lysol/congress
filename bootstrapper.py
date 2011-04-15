@@ -97,7 +97,7 @@ try:
         matching = filter(lambda tc: tc[0] == t, rels)
         print 'Starting node %d' % i
 
-        cmd = 'python2.6 -m congress.congress --debug --port %d --ctl %d ' % (19000 + i, 29000 + i)
+        cmd = 'python2.7 -m congress.congress --debug --port %d --ctl %d ' % (19000 + i, 29000 + i)
         for match in matching:
             peer_port = match[1]
             cmd += ' --peer 127.0.0.1 %d' % (19000 + peer_port)
