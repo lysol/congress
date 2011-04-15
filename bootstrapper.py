@@ -88,7 +88,7 @@ rels = (
     (38, 16)
     )
 
-connectors = range(64)
+connectors = range(36)
 
 threads = []
 try:

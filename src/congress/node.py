@@ -270,7 +270,7 @@ class Node:
                 w.stop()
         # unloop all nested loop
         print("stopping the loop: {0}".format(self._sockwatcher.loop))
-        self._sockwatcher.loop.unloop()
+        self._sockwatcher.loop.stop()
        
 
     def _sig_cb(self, watcher, events):
@@ -387,7 +387,7 @@ class Node:
                 peer.enqueue_message(message)
 
     def start(self):
-        self._loop.loop()
+        self._loop.start()
 
     def add_peer(self, conn, connect=False, existing_socket=None):
         if existing_socket is None:
@@ -408,7 +408,6 @@ class Node:
             pass
 
         def id_timeout(i_message, i_server, i_peer):
-            if i_peer.id is None:
                 i_server._debug("Removing peer due to timeout.")
                 i_server._remove_peer(i_peer)
 
@@ -436,11 +435,10 @@ class Node:
         self._address = (host, port)
         self._socket.listen(1)
         if pyev_loop is None:
-            self._loop = pyev.default_loop(pyev.EVFLAG_NOSIGFD)
+            self._loop = pyev.default_loop(io_interval=0.01)
         else:
             self._loop = pyev_loop
 
-        self._loop.set_io_collect_interval(.01)
         self._sockwatcher = pyev.Io(self._socket, pyev.EV_READ | pyev.EV_WRITE,
             self._loop, self._sock_ev)
         self._sockwatcher.start()

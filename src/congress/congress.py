@@ -79,7 +79,7 @@ def chat_handler(message, server, peer):
 
     :param message: CHAT message
     :param server: The Congress server
-    :param peer: The peer hte message was received from
+    :param peer: The peer the message was received from
     """
     target_node = message.data['target_node_id']
     source_node = message.data['source_node_id']
@@ -272,21 +272,27 @@ class Congress(Node):
         dist = peer.id ^ self.id
         matching_buckets = filter(lambda (i, b): bucket_leaf(dist, i),
             enumerate(self.buckets))
-        for i, bucket in matching_buckets: 
+        bucket_inserted = False
+        for i, bucket in matching_buckets:
             if peer in bucket:
                 bucket.remove(peer)
                 bucket.insert(0, peer)
+                bucket_inserted = True
             elif len(bucket) < 20:
                 bucket.insert(0, peer)
+                bucket_inserted = True
             else:
                 if peer in self.replacement_buckets[i]:
                     self.replacement_buckets[i].remove(peer)
                 self.replacement_buckets[i].insert(0, peer)
                 bucket[-1].enqueue_message(Message(PING))
-        #if self.debug:
-        #    bs = filter(lambda (i, b): b != [], enumerate(self.buckets))
-        #    rbs = filter(lambda (i, r): r != [],
-        #        enumerate(self.replacement_buckets))
+
+        # If we promoted a peer, need to remove it from replacement
+        # buckets.
+        if bucket_inserted:
+            for i, bucket in filter(lambda (i, b): bucket_leaf(dist, i) and \
+                peer in b, enumerate(self.replacement_buckets)):
+                self.replacement_buckets[i].remove(peer)
 
     def _node_id_present(self, node_id):
         """Determine if any of the connected peers have the specified 160-bit
@@ -436,6 +442,9 @@ class Congress(Node):
                 p.id == peer.id:
                     self._debug("Removing peer from bucket %d" % i)
                     self.buckets[i].remove(p)
+                    # Attempt to fill the empty slot.
+                    if len(self.replacement_buckets[i]) > 0:
+                        self._hit_peer(self.replacement_buckets[i][0])
         for (i, rbucket) in enumerate(self.replacement_buckets):
             for p in rbucket:
                 if p == peer or \
@@ -470,7 +479,8 @@ class Congress(Node):
 
     def __init__(self, host='0.0.0.0', port=16800, initial_peers=[],
         debug=False, ctl_port=None, pyev_loop=None, debug_file=None,
-        storage_class=dict, storage_args=[], storage_kwargs={}):
+        storage_class=dict, storage_args=[], storage_kwargs={},
+        node_id=None):
         """
         :param initial_peers: List of (hostname, port) tuples to connect to.
         :param debug: If True, many debug messages will be printed.
@@ -479,7 +489,8 @@ class Congress(Node):
             supply it here.
         """
         Node.__init__(self, (host, port), client_class=CongressPeer,
-            debug=debug, pyev_loop=pyev_loop, debug_file=debug_file)
+            debug=debug, pyev_loop=pyev_loop, debug_file=debug_file,
+            id=node_id)
         self._gen_id()
         self._make_buckets()
         self.store = storage_class(*storage_args, **storage_kwargs)
@@ -535,6 +546,8 @@ def main():
         'port 29800', default=None, type=int)
     parser.add_argument('-F', '--debugfile', help='Debug output is saved'
         'in the argument to this option', default=None)
+    parser.add_argument('-i', '--id', help='Use specified node ID'
+        ' rather than generating one randomly.', default=None)
     args = parser.parse_args()
 
     if args.peer is not None:
@@ -545,7 +558,8 @@ def main():
         peer_conns = []
 
     server = Congress(host=args.host, port=args.port, initial_peers=peer_conns,
-        debug=args.debug, ctl_port=args.ctl, debug_file=args.debugfile)
+        debug=args.debug, ctl_port=args.ctl, debug_file=args.debugfile,
+        node_id=args.id)
     server.start()
 
 if __name__ == "__main__":

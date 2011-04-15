@@ -33,7 +33,7 @@ Debug will spit out a LOT of information.
 
 You can also use the class on its own, but you'll have to either tie your
 code into the libev event loop, or use the folowing libev flags:
-    node._loop.loop(flags=pyev.EVLOOP_ONESHOT | pyev.EVLOOP_NONBLOCK)
+    node._loop.loop(flags=pyev.EVLOOP_ONCE | pyev.EVLOOP_NOWAIT)
 inside of your own event loop.
 
 When using the rpc_get method, you must provide a callback that accepts
